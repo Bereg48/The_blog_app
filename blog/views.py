@@ -9,12 +9,13 @@ def post_list(request):
     return render(request, 'blog/post/list.html', {'posts': posts})
 
 
-def post_detail(request, id):
-    """Метод post_detail принимает аргумент  id поста, извлекает объект Post с заданным id
-    , вызывает метод  get_object_or_404()"""
+def post_detail(request, year, month, day, post):
+    """Метод post_detail принимает аргумент   year, month, day и post поста, извлекать опубликованный пост
+    с заданным слагом и датой публикации, вызывает метод  get_object_or_404()"""
 
-    post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED)
+    post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED,
+                             slug=post,
+                             publish__year=year,
+                             publish__month=month,
+                             publish__day=day)
     return render(request, 'blog/post/detail.html', {'post': post})
-
-
-
